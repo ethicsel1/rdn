@@ -26,16 +26,21 @@ const MotivatoreDinamico = ({ mood }) => {
   }
   
   // Effect: Verifica caricamento dati - CORRECTED
-  useEffect(() => {
-    const checkData = () => {
-      if (window.RDN?.data?.motivators?.[mood] && window.RDN?.data?.motivators?.final_phrases) {
-        setDataLoaded(true);
-      } else {
-        setTimeout(checkData, 100);
-      }
-    };
-    checkData();
-  }, [mood]);
+useEffect(() => {
+  const checkData = () => {
+    console.log('🔍 Checking motivator data - mood:', mood);
+    console.log('🔍 motivators?.[mood]:', !!window.RDN?.data?.motivators?.[mood]);
+    console.log('🔍 final_phrases:', !!window.RDN?.data?.motivators?.final_phrases);
+    
+    if (window.RDN?.data?.motivators?.[mood] && window.RDN?.data?.motivators?.final_phrases) {
+      console.log('✅ Motivatore data loaded');
+      setDataLoaded(true);
+    } else {
+      setTimeout(checkData, 100);
+    }
+  };
+  checkData();
+}, [mood]);
   
   // Effect: Reset mezzanotte
   useEffect(() => {
@@ -75,15 +80,21 @@ const MotivatoreDinamico = ({ mood }) => {
     return shuffled.slice(0, Math.min(count, array.length));
   };
   
-  // Genera nuovo contenuto - CORRECTED
-  const generateContent = () => {
-    if (!window.RDN?.data?.motivators?.[mood]) {
-      console.error('Mood non valido:', mood);
-      return null;
-    }
-    
-    const motivatorData = window.RDN.data.motivators[mood];
-    const finalData = window.RDN.data.motivators.final_phrases;
+ // Genera nuovo contenuto - CORRECTED
+const generateContent = () => {
+  console.log('🔍 generateContent chiamato con mood:', mood);
+  console.log('🔍 window.RDN.data.motivators:', Object.keys(window.RDN.data.motivators || {}));
+  
+  if (!window.RDN?.data?.motivators?.[mood]) {
+    console.error('❌ Mood non valido:', mood);
+    return null;
+  }
+  
+  const motivatorData = window.RDN.data.motivators[mood];
+  const finalData = window.RDN.data.motivators.final_phrases;
+  
+  console.log('✅ motivatorData keys:', Object.keys(motivatorData));
+  console.log('✅ finalData keys:', Object.keys(finalData));
     
     // Intro statica per sezione 1
     const section1Intros = {
