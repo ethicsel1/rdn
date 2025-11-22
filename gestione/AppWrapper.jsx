@@ -133,13 +133,11 @@ const RDNContextConsumer = () => {
 const RDNGlobalExposer = ({ user }) => {
   const rdnContext = useRDN();
  useEffect(() => {
-  if (window.RDN) console.warn('⚠️ window.RDN già esistente, merging...');
+  // NON sovrascrivere window.RDN, solo aggiungere proprietà
+  window.RDN = window.RDN || {};
   
-  // Preserva data se già caricato
-  const existingData = window.RDN?.data;
-  
-  window.RDN = {
-    ...window.RDN,
+  // Aggiungi proprietà senza cancellare data
+  Object.assign(window.RDN, {
     version: '1.0.0',
     config: {
       company: RDN_CONFIG.company,
@@ -168,19 +166,9 @@ const RDNGlobalExposer = ({ user }) => {
     },
     scanEmergencyKeywords,
     checkUserAccess: (level) => checkUserAccess(user, level)
-  };
+  });
   
-  // Ripristina data se esisteva
-  if (existingData) {
-    window.RDN.data = existingData;
-  }
-  
-  console.log('✅ window.RDN inizializzato', window.RDN);
-  
-  // NON cancellare data nel cleanup
-  return () => {
-    // Cleanup rimosso per preservare data
-  };
+  console.log('✅ window.RDN aggiornato, data presente:', !!window.RDN.data);
 }, [user, rdnContext]);
   return null;
 };
