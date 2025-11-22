@@ -25,10 +25,10 @@ const MotivatoreDinamico = ({ mood }) => {
     );
   }
   
-  // Effect: Verifica caricamento dati
+  // Effect: Verifica caricamento dati - CORRECTED
   useEffect(() => {
     const checkData = () => {
-      if (window.RDN && window.RDN.data && window.RDN.data.motivators && window.RDN.data.final_phrases) {
+      if (window.RDN?.data?.motivators && window.RDN?.data?.final_phrases) {
         setDataLoaded(true);
       } else {
         setTimeout(checkData, 100);
@@ -75,9 +75,9 @@ const MotivatoreDinamico = ({ mood }) => {
     return shuffled.slice(0, Math.min(count, array.length));
   };
   
-  // Genera nuovo contenuto
+  // Genera nuovo contenuto - CORRECTED
   const generateContent = () => {
-    if (!window.RDN.data.motivators[mood]) {
+    if (!window.RDN?.data?.motivators?.[mood]) {
       console.error(\'Mood non valido:\', mood);
       return null;
     }
