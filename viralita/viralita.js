@@ -17,10 +17,10 @@ const BadgeProgress = () => {
   // Verifica accesso
   if (user_level < 1) return null;
 
-  // Effect: Verifica caricamento dati
+  // Effect: Verifica caricamento dati - CORRECTED
   useEffect(() => {
     const checkData = () => {
-      if (window.RDN && window.RDN.data && window.RDN.data.virality_badges) {
+      if (window.RDN?.data?.virality_badges) {
         setDataLoaded(true);
       } else {
         setTimeout(checkData, 100);
