@@ -97,12 +97,15 @@ const Schermata1Benvenuto = ({ onNavigate }) => {
     return () => clearInterval(interval);
   }, [todaySelection.timestamp]);
 
-  // Effect: Genera benvenuto iniziale
-  useEffect(() => {
-    if (dataLoaded && window.RDN?.data?.welcome_messages) {
-      generateWelcomeMessage();
-    }
-  }, [dataLoaded]);
+// Effect: Genera benvenuto iniziale
+useEffect(() => {
+  if (dataLoaded && window.RDN?.data?.welcome_messages) {
+    console.log('🔍 Generando welcome message, array length:', window.RDN.data.welcome_messages.length);
+    generateWelcomeMessage();
+  } else {
+    console.log('🔍 Welcome non generato - dataLoaded:', dataLoaded, 'messages:', window.RDN?.data?.welcome_messages?.length);
+  }
+}, [dataLoaded]);
 
   // Effect: Mostra affermazioni e motivatore se mood già selezionato
   useEffect(() => {
