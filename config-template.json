@@ -1,0 +1,105 @@
+{
+  "ecosystem_slug": "{{ECOSYSTEM_SLUG}}",
+  "ecosystem_name": "{{ECOSYSTEM_NAME}}",
+  "company": {
+    "name": "{{COMPANY_NAME}}",
+    "owner": "{{COMPANY_OWNER}}",
+    "email": "{{COMPANY_EMAIL}}",
+    "address": "{{COMPANY_ADDRESS}}",
+    "tax_id": "{{COMPANY_TAX_ID}}",
+    "emergency_numbers": {
+      "primary": "112",
+      "secondary": "800 86 00 22"
+    }
+  },
+  "ai_providers": {
+    "runpod": {
+      "endpoint": "{{RUNPOD_ENDPOINT}}",
+      "api_key": "{{RUNPOD_API_KEY}}",
+      "timeout": 15000
+    },
+    "fallback1": {
+      "endpoint": "",
+      "api_key": "",
+      "timeout": 15000
+    },
+    "fallback2": {
+      "endpoint": "",
+      "api_key": "",
+      "timeout": 15000
+    }
+  },
+  "amember": {
+    "product_id_l1": "{{PRODUCT_ID_L1}}",
+    "product_id_l2": "{{PRODUCT_ID_L2}}",
+    "login_url": "/amember/login"
+  },
+  "analytics": {
+    "tracking_id": "",
+    "enabled": false
+  },
+  "rate_limits": {
+    "level1": {
+      "daily": 5,
+      "sos": 3
+    },
+    "level2": {
+      "daily": 15,
+      "sos": 3
+    }
+  },
+  "chatbot": {
+    "consultations_enabled": false,
+    "consultation_url": "",
+    "support_url": "",
+    "faq_specific": [
+      {
+        "question": "Domanda specifica ecosistema?",
+        "answer": "Risposta personalizzata per questo ecosistema."
+      },
+      {
+        "question": "Come funziona questo strumento?",
+        "answer": "Spiegazione dettagliata dello strumento principale."
+      }
+    ]
+  },
+  "tools": [
+    {"id": 1, "name": "utils.js", "screen": "generali"},
+    {"id": 2, "name": "hooks.js", "screen": "generali"},
+    {"id": 3, "name": "components.js", "screen": "generali"},
+    {"id": 4, "name": "AppWrapper.jsx", "screen": "generali"},
+    {"id": 5, "name": "LegalModals.jsx", "screen": "generali"},
+    {"id": 6, "name": "liste.js", "screen": "liste"},
+    {"id": 7, "name": "output-ia.js", "screen": "output"},
+    {"id": 8, "name": "viralita.js", "screen": "viralita"},
+    {"id": 9, "name": "schermata1.jsx", "screen": "schermate"},
+    {"id": 10, "name": "schermata2.jsx", "screen": "schermate"},
+    {"id": 11, "name": "schermata3.jsx", "screen": "schermate"},
+    {"id": 12, "name": "motivatore.jsx", "screen": "tools-s1-s2"},
+    {"id": 13, "name": "test-globale.jsx", "screen": "tools-s1-s2"},
+    {"id": 14, "name": "test-settimanale.jsx", "screen": "tools-s1-s2"},
+    {"id": 15, "name": "rinforzo.jsx", "screen": "tools-s3"},
+    {"id": 16, "name": "trasformatore-base.jsx", "screen": "tools-s3"},
+    {"id": 17, "name": "scudo.jsx", "screen": "tools-s3"},
+    {"id": 18, "name": "sos.jsx", "screen": "tools-s3"},
+    {"id": 19, "name": "spada.jsx", "screen": "tools-s3"},
+    {"id": 20, "name": "trasformatore-avanzato.jsx", "screen": "tools-s3"},
+    {"id": 21, "name": "cdfp.jsx", "screen": "tools-s3"},
+    {"id": 22, "name": "obiettivi.jsx", "screen": "tools-s3"},
+    {"id": 23, "name": "percorso.jsx", "screen": "tools-s3"}
+  ],
+  "screens": [
+    {"id": 1, "name": "Schermata 1"},
+    {"id": 2, "name": "Schermata 2"},
+    {"id": 3, "name": "Schermata 3"}
+  ],
+  "palette": {
+    "primary": "#0073aa",
+    "secondary": "#46b450",
+    "background": "#f9f9f9",
+    "text": "#333333",
+    "error": "#dc3232",
+    "warning": "#ffb900",
+    "success": "#46b450"
+  }
+}
