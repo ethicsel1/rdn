@@ -28,14 +28,14 @@ const MotivatoreDinamico = ({ mood }) => {
   // Effect: Verifica caricamento dati - CORRECTED
   useEffect(() => {
     const checkData = () => {
-      if (window.RDN?.data?.motivators && window.RDN?.data?.final_phrases) {
+      if (window.RDN?.data?.motivators?.[mood] && window.RDN?.data?.motivators?.final_phrases) {
         setDataLoaded(true);
       } else {
         setTimeout(checkData, 100);
       }
     };
     checkData();
-  }, []);
+  }, [mood]);
   
   // Effect: Reset mezzanotte
   useEffect(() => {
@@ -83,7 +83,7 @@ const MotivatoreDinamico = ({ mood }) => {
     }
     
     const motivatorData = window.RDN.data.motivators[mood];
-    const finalData = window.RDN.data.final_phrases;
+    const finalData = window.RDN.data.motivators.final_phrases;
     
     // Intro statica per sezione 1
     const section1Intros = {
