@@ -1,4 +1,4 @@
-// liste.js - Carica liste da database
+// liste.js - Carica liste da database - VERSIONE PROTETTA
 (async function() {
   while (!window.RDN_WP_CONFIG) {
     await new Promise(resolve => setTimeout(resolve, 50));
@@ -12,21 +12,21 @@
       const data = await res.json();
       const parsedData = JSON.parse(data.list_data);
       
-      // Preserva window.RDN esistente e aggiungi data
       window.RDN = window.RDN || {};
       
-      // Merge invece di sostituire
+      // PROTEZIONE: rendi data non cancellabile
       Object.defineProperty(window.RDN, 'data', {
         value: parsedData,
         writable: false,
-        configurable: false
+        configurable: false,
+        enumerable: true
       });
       
-      console.log('✅ RDN.data caricato e protetto:', Object.keys(window.RDN.data));
+      console.log('✅ RDN.data protetto:', Object.keys(window.RDN.data));
     } else {
-      console.error('❌ Errore HTTP:', res.status);
+      console.error('❌ HTTP:', res.status);
     }
   } catch(e) {
-    console.error('❌ Errore caricamento liste:', e);
+    console.error('❌ Errore:', e);
   }
 })();
