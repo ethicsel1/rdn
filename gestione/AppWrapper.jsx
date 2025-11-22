@@ -133,10 +133,11 @@ const RDNContextConsumer = () => {
 const RDNGlobalExposer = ({ user }) => {
   const rdnContext = useRDN();
  useEffect(() => {
-  // NON sovrascrivere window.RDN, solo aggiungere proprietà
   window.RDN = window.RDN || {};
   
-  // Aggiungi proprietà senza cancellare data
+  // PRESERVA data se già caricato
+  const existingData = window.RDN.data;
+  
   Object.assign(window.RDN, {
     version: '1.0.0',
     config: {
@@ -168,7 +169,12 @@ const RDNGlobalExposer = ({ user }) => {
     checkUserAccess: (level) => checkUserAccess(user, level)
   });
   
-  console.log('✅ window.RDN aggiornato, data presente:', !!window.RDN.data);
+  // RIPRISTINA data se esisteva
+  if (existingData) {
+    window.RDN.data = existingData;
+  }
+  
+  console.log('✅ RDN aggiornato, data:', !!window.RDN.data);
 }, [user, rdnContext]);
   return null;
 };
