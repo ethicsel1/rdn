@@ -14,7 +14,7 @@ const MotivatoreDinamico = ({ mood }) => {
   const [dataLoaded, setDataLoaded] = useState(false);
   const [isShowing, setIsShowing] = useState(false);
   const [currentContent, setCurrentContent] = useState(null);
-  const [animationPhase, setAnimationPhase] = useState('idle'); // idle | section1 | section2 | section3 | complete
+  const [animationPhase, setAnimationPhase] = useState('idle');
   
   // Verifica accesso
   if (user_level < 1) {
@@ -198,17 +198,14 @@ const MotivatoreDinamico = ({ mood }) => {
   const startAnimation = () => {
     setAnimationPhase('section1');
     
-    // Sezione 1: 3 frasi + label (totale ~6s)
     setTimeout(() => {
       setAnimationPhase('section2');
     }, 6000);
     
-    // Sezione 2: 3+3 frasi + 2 label (totale ~10s)
     setTimeout(() => {
       setAnimationPhase('section3');
     }, 16000);
     
-    // Sezione 3: 3 frasi + emoji + finale (totale ~6s)
     setTimeout(() => {
       setAnimationPhase('complete');
     }, 22000);
@@ -328,7 +325,6 @@ const MotivatoreDinamico = ({ mood }) => {
           <div className="text-center mb-4 text-3xl">✨</div>
           <p className="text-sm font-bold text-[#78350F] mb-3">Ma la verità è che:</p>
           
-          {/* Prima sottosequenza */}
           {currentContent.section2.phrases1.map((phrase, idx) => (
             <div
               key={`2a-${idx}`}
@@ -353,7 +349,6 @@ const MotivatoreDinamico = ({ mood }) => {
             {currentContent.section2.label1}
           </div>
           
-          {/* Seconda sottosequenza (solo fragile/incerto) */}
           {currentContent.section2.phrases2.length > 0 && (
             <>
               <p className="text-sm font-bold text-[#78350F] mb-3 mt-5">E che:</p>
