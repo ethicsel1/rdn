@@ -1,5 +1,7 @@
-// liste.js - Carica liste da database - VERSIONE PROTETTA
+// liste.js - Carica liste da database - CARICA PRIMA DI REACT
 (async function() {
+  console.log('🔄 Inizio caricamento liste.js');
+  
   while (!window.RDN_WP_CONFIG) {
     await new Promise(resolve => setTimeout(resolve, 50));
   }
@@ -12,17 +14,22 @@
       const data = await res.json();
       const parsedData = JSON.parse(data.list_data);
       
-      window.RDN = window.RDN || {};
+      // CREA window.RDN se non esiste
+      if (!window.RDN) {
+        window.RDN = {};
+      }
       
-      // PROTEZIONE: rendi data non cancellabile
-      Object.defineProperty(window.RDN, 'data', {
-        value: parsedData,
-        writable: false,
-        configurable: false,
-        enumerable: true
-      });
+      // IMPOSTA data
+      window.RDN.data = parsedData;
       
-      console.log('✅ RDN.data protetto:', Object.keys(window.RDN.data));
+      // MARCA come caricato
+      window.RDN.dataLoaded = true;
+      
+      console.log('✅ RDN.data caricato:', Object.keys(window.RDN.data));
+      console.log('✅ Motivators keys:', Object.keys(window.RDN.data.motivators || {}));
+      
+      // DISPATCHA evento
+      window.dispatchEvent(new Event('rdn-data-loaded'));
     } else {
       console.error('❌ HTTP:', res.status);
     }
