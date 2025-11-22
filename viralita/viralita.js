@@ -83,7 +83,6 @@ const BadgeProgress = () => {
         className="text-xs text-[#14B8A6] underline hover:text-[#0D9488] transition-colors inline-block mt-2"
         onClick={(e) => {
           e.preventDefault();
-          // TODO: Aprire dashboard completa viralità
           console.log('Apri dashboard viralità');
         }}
       >
