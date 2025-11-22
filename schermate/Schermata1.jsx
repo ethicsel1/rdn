@@ -122,17 +122,26 @@ useEffect(() => {
     setIsSelectionComplete(complete);
   }, [todaySelection]);
 
-  // Genera messaggio benvenuto
-  const generateWelcomeMessage = () => {
-    if (!window.RDN?.data?.welcome_messages) return;
-    
-    const emojis = ['🌱', '💫', '🛡️', '🌿', '✨', '🔥', '🌅'];
-    const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-    
-    const { item, index } = getRandomItem(
-      window.RDN.data.welcome_messages,
-      lastWelcomeIndex
-    );
+ // Genera messaggio benvenuto
+const generateWelcomeMessage = () => {
+  if (!window.RDN?.data?.welcome_messages) {
+    console.error('❌ welcome_messages non trovato');
+    return;
+  }
+  
+  const emojis = ['🌱', '💫', '🛡️', '🌿', '✨', '🔥', '🌅'];
+  const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+  
+  const { item, index } = getRandomItem(
+    window.RDN.data.welcome_messages,
+    lastWelcomeIndex
+  );
+  
+  console.log('✅ Welcome generato:', item?.substring(0, 30) + '...');
+  setWelcomeEmoji(randomEmoji);
+  setWelcomeMessage(item);
+  setLastWelcomeIndex(index);
+};
     
     setWelcomeEmoji(randomEmoji);
     setWelcomeMessage(item);
