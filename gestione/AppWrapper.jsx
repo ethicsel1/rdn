@@ -132,42 +132,56 @@ const RDNContextConsumer = () => {
 // ===== SEZIONE: RDN GLOBAL EXPOSER =====
 const RDNGlobalExposer = ({ user }) => {
   const rdnContext = useRDN();
-  useEffect(() => {
-    if (window.RDN) console.warn('⚠️ window.RDN già esistente, merging...');
-    window.RDN = {
-      ...window.RDN,
-      version: '1.0.0',
-      config: {
-        company: RDN_CONFIG.company,
-        emergency: RDN_CONFIG.company.emergencyNumbers
-      },
-      levels: {
-        level1: { price: '€9,90/settimana', limits: RDN_CONFIG.rateLimits.level1 },
-        level2: { price: '€19,90/settimana', limits: RDN_CONFIG.rateLimits.level2 }
-      },
-      useRDN: () => rdnContext,
-      callAI: rdnContext.callAI,
-      trackEvent: rdnContext.trackEvent,
-      checkAccess: rdnContext.checkAccess,
-      trackVariant: rdnContext.trackVariant,
-      checkMilestone: rdnContext.checkMilestone,
-      checkModuleCache: rdnContext.checkModuleCache,
-      saveModuleCache: rdnContext.saveModuleCache,
-      checkSituationCache: rdnContext.checkSituationCache,
-      saveSituationCache: rdnContext.saveSituationCache,
-      openLegalModal: rdnContext.openLegalModal,
-      user: {
-        id: user?.user_id,
-        email: user?.email,
-        level: user?.subscription_level,
-        status: user?.subscription_status
-      },
-      scanEmergencyKeywords,
-      checkUserAccess: (level) => checkUserAccess(user, level)
-    };
-    console.log('✅ window.RDN inizializzato', window.RDN);
-    return () => { if (window.RDN?.version === '1.0.0') delete window.RDN; };
-  }, [user, rdnContext]);
+ useEffect(() => {
+  if (window.RDN) console.warn('⚠️ window.RDN già esistente, merging...');
+  
+  // Preserva data se già caricato
+  const existingData = window.RDN?.data;
+  
+  window.RDN = {
+    ...window.RDN,
+    version: '1.0.0',
+    config: {
+      company: RDN_CONFIG.company,
+      emergency: RDN_CONFIG.company.emergencyNumbers
+    },
+    levels: {
+      level1: { price: '€9,90/settimana', limits: RDN_CONFIG.rateLimits.level1 },
+      level2: { price: '€19,90/settimana', limits: RDN_CONFIG.rateLimits.level2 }
+    },
+    useRDN: () => rdnContext,
+    callAI: rdnContext.callAI,
+    trackEvent: rdnContext.trackEvent,
+    checkAccess: rdnContext.checkAccess,
+    trackVariant: rdnContext.trackVariant,
+    checkMilestone: rdnContext.checkMilestone,
+    checkModuleCache: rdnContext.checkModuleCache,
+    saveModuleCache: rdnContext.saveModuleCache,
+    checkSituationCache: rdnContext.checkSituationCache,
+    saveSituationCache: rdnContext.saveSituationCache,
+    openLegalModal: rdnContext.openLegalModal,
+    user: {
+      id: user?.user_id,
+      email: user?.email,
+      level: user?.subscription_level,
+      status: user?.subscription_status
+    },
+    scanEmergencyKeywords,
+    checkUserAccess: (level) => checkUserAccess(user, level)
+  };
+  
+  // Ripristina data se esisteva
+  if (existingData) {
+    window.RDN.data = existingData;
+  }
+  
+  console.log('✅ window.RDN inizializzato', window.RDN);
+  
+  // NON cancellare data nel cleanup
+  return () => {
+    // Cleanup rimosso per preservare data
+  };
+}, [user, rdnContext]);
   return null;
 };
 
