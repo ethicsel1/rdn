@@ -92,6 +92,9 @@ const BadgeProgress = () => {
   );
 };
 
-// Registra globalmente
-window.RDN = window.RDN || {};
-window.RDN.BadgeProgress = BadgeProgress;
+// Registra globalmente senza sovrascrivere
+if (window.RDN) {
+  window.RDN.BadgeProgress = BadgeProgress;
+} else {
+  window.RDN = { BadgeProgress };
+}
