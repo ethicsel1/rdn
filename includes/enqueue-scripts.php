@@ -126,14 +126,15 @@ function rdn_inject_bundle($ecosystem_slug) {
         config: <?php echo json_encode($config); ?>
     };
     
-    // Initialize RDN namespace
-    window.RDN = {
-        version: '1.0.0',
-        ecosystem: <?php echo json_encode($ecosystem_slug); ?>,
-        loaded: true
-    };
-    
-    console.log('✅ RDN LOADED:', window.RDN);
+   // Initialize RDN namespace - MERGE invece di sovrascrivere
+window.RDN = window.RDN || {};
+Object.assign(window.RDN, {
+    version: '1.0.0',
+    ecosystem: <?php echo json_encode($ecosystem_slug); ?>,
+    loaded: true
+});
+
+console.log('✅ RDN INITIALIZED:', window.RDN);
     </script>
     
     <script type="text/babel">
