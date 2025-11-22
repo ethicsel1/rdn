@@ -1,5 +1,5 @@
 // ===== GENERALI ultimo viralita.js (lo inserisco qui perchè è senza categoria) =====
-// BadgeProgress.jsx
+// BadgeProgress.jsx - VERSIONE CORRETTA
 // Sidebar component per visualizzare progresso viralità (Guide + Badge)
 
 const BadgeProgress = () => {
