@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                 String   @id @default(uuid())
+  email              String   @unique
+  password           String
+  subscriptionLevel  String   @default("L1") // L1 or L2
+  subscriptionStatus String   @default("trial") // trial, active, expired
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  moods        Mood[]
+  globalGoals  GlobalGoal[]
+  weeklyGoals  WeeklyGoal[]
+  toolUsages   ToolUsage[]
+}
+
+model Mood {
+  id        String   @id @default(uuid())
+  userId    String
+  mood      String   // fragile, incerto, pronto
+  energy    String?  // bassa, media, alta
+  time      String?  // 5-10, 15-30, 45+
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+}
+
+model GlobalGoal {
+  id          String   @id @default(uuid())
+  userId      String
+  title       String
+  description String?
+  category    String   // 3mesi, 1anno, 3anni, 10anni, vita
+  startScore  Float    @default(0)
+  targetScore Float    @default(10)
+  currentScore Float   @default(0)
+  deadline    DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model WeeklyGoal {
+  id          String   @id @default(uuid())
+  userId      String
+  title       String
+  description String?
+  priority    String   // critica, alta, media
+  startScore  Float    @default(0)
+  targetScore Float    @default(10)
+  currentScore Float   @default(0)
+  startDate   DateTime @default(now())
+  endDate     DateTime
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isActive])
+}
+
+model ToolUsage {
+  id        String   @id @default(uuid())
+  userId    String
+  toolName  String   // rinforzo, trasformatore, scudo, sos, etc.
+  usedAt    DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, toolName, usedAt])
+}
